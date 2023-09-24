@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/pages/home';
+import About from './components/pages/about';
+import AddPost from './components/pages/addPost';
+import EditPost from './components/pages/editPost';
+import Post from './components/pages/post';
+import NotFound from './components/pages/notFound';
+import Header from './components/views/Header/header';
+import Footer from './components/views/Footer/footer';
+import { Container } from 'react-bootstrap';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <Container>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/post/add" element={<AddPost />} />
+          <Route path="/post/edit/:id" element={<EditPost />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </Container>
+    </main>
   );
 }
 
