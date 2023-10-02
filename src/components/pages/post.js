@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { dateToStr } from '../../utils/dateToStr';
+
 
 const Post = () => {
   const { id } = useParams();
@@ -36,8 +38,7 @@ const Post = () => {
               </div>
             </div>
             <p><strong>Author:</strong> {post.author}</p>
-            <p><strong>Published:</strong> {post.publishedDate}</p>
-            <p>{post.content}</p>
+            <p><strong>Published:</strong> {dateToStr(post.publishedDate)}</p>            <p dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getAllPosts } from '../../../redux/postsRedux';
 import { Link } from 'react-router-dom';
+import { dateToStr } from '../../../utils/dateToStr'; // Zaimportuj funkcję dateToStr
 
 const Posts = () => {
 
@@ -15,7 +16,7 @@ const Posts = () => {
               <h2 className="card-title">{post.title}</h2>
               <p className="card-text">{post.shortDescription}</p>
               <p className="card-text">{post.content}</p>
-              <p className="card-text">{post.publishedDate}</p>
+              <p className="card-text">{dateToStr(post.publishedDate)}</p> {/* Użyj funkcji dateToStr do konwersji daty */}
               <p className="card-text">{post.author}</p>
               <Link to={`/post/${post.id}`} className="btn btn-primary">Read more</Link>
             </div>
