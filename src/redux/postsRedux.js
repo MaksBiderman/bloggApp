@@ -1,7 +1,9 @@
-// selectors
+import initialState from './initialState';
+
+// selektory
 export const getAllPosts = state => state.posts;
 export const selectPostById = (state, postId) => state.posts.find(post => post.id === postId);
-
+export const getCategories = state => state.categories;
 
 // action names
 const DELETE_POST = 'DELETE_POST';
@@ -23,9 +25,8 @@ export const editPost = (post) => ({
   payload: post
 });
 
-
 // reducer
-const postsReducer = (statePart = [], action) => {
+const postsReducer = (statePart = initialState.posts, action) => {
   switch (action.type) {
     case DELETE_POST:
       return statePart.filter(post => post.id !== action.payload);
@@ -33,7 +34,6 @@ const postsReducer = (statePart = [], action) => {
       return [...statePart, action.payload];
     case EDIT_POST:
       return statePart.map(post => post.id === action.payload.id ? action.payload : post);
-
     default:
       return statePart;
   };

@@ -1,11 +1,12 @@
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getAllPosts } from '../../../redux/postsRedux';
+import { getAllPosts } from '../../redux/postsRedux';
 import { Link } from 'react-router-dom';
-import { dateToStr } from '../../../utils/dateToStr';
+import { dateToStr } from '../../utils/dateToStr';
 
-const Posts = () => {
-
-  const posts = useSelector(getAllPosts);
+const CategoryPosts = () => {
+  const { categoryName } = useParams();
+  const posts = useSelector(getAllPosts).filter(post => post.category.toLowerCase() === categoryName);
 
   return (
     <div className="row">
@@ -17,7 +18,7 @@ const Posts = () => {
               <p className="card-text">{post.shortDescription}</p>
               <p className="card-text">{post.content}</p>
               <p className="card-text">{dateToStr(post.publishedDate)}</p>
-              <p className="card-text"><strong>Category:</strong> {post.category}</p> {/* Dodaj linię wyświetlającą kategorię */}
+              <p className="card-text"><strong>Category:</strong> {post.category}</p>
               <p className="card-text">{post.author}</p>
               <Link to={`/post/${post.id}`} className="btn btn-primary">Read more</Link>
             </div>
@@ -28,4 +29,4 @@ const Posts = () => {
   );
 }
 
-export default Posts;
+export default CategoryPosts;

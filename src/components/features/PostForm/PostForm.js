@@ -6,8 +6,11 @@ import 'react-quill/dist/quill.snow.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
+import { connect } from 'react-redux';
+import { getCategories } from '../../../redux/postsRedux';
 
-const PostForm = ({ action, actionText, ...props }) => {
+
+const PostForm = ({ action, actionText, categories, ...props }) => {
   const [author, setAuthor] = useState(props.author || '');
   const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
   const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
@@ -34,7 +37,8 @@ const PostForm = ({ action, actionText, ...props }) => {
         author,
         content,
         shortDescription,
-        publishedDate
+        publishedDate,
+        category: data.category
       });
     }
   };
@@ -86,6 +90,17 @@ const PostForm = ({ action, actionText, ...props }) => {
           />
           {dateError && <small className="d-block form-text text-danger mt-2">Published date can't be empty</small>}
         </div>
+        <div className="form-group">
+          <label>Category</label>
+          <select {...register("category", { required: "Category is required" })} className="form-control">
+            {categories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          {errors.category && <small className="d-block form-text text-danger mt-2">{errors.category.message}</small>}
+        </div>
         <button type="submit" className="btn btn-primary">{actionText}</button>
       </form>
     </div>
@@ -95,6 +110,7 @@ const PostForm = ({ action, actionText, ...props }) => {
 PostForm.propTypes = {
   action: PropTypes.func.isRequired,
   actionText: PropTypes.string.isRequired,
+  categories: PropTypes.array.isRequired,
   title: PropTypes.string,
   author: PropTypes.string,
   content: PropTypes.string,
@@ -102,4 +118,8 @@ PostForm.propTypes = {
   publishedDate: PropTypes.string
 };
 
-export default PostForm;
+const mapStateToProps = state => ({
+  categories: getCategories(state),
+});
+
+export default connect(mapStateToProps)(PostForm);

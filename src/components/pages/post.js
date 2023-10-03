@@ -37,6 +37,7 @@ const Post = () => {
                 <button onClick={handleDelete} className="btn btn-outline-danger">Delete</button>
               </div>
             </div>
+            <p><strong>Category:</strong> {post.category}</p>
             <p><strong>Author:</strong> {post.author}</p>
             <p><strong>Published:</strong> {dateToStr(post.publishedDate)}</p>            <p dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
